@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -21,24 +22,15 @@ class CategoryController extends Controller
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \App\Http\Requests\StoreCategoryRequest  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(StoreCategoryRequest $request)
 	{
-		//
+		$category = Category::create($request->validated());
+		return $category->toArray();
 	}
 
 	/**
@@ -49,18 +41,7 @@ class CategoryController extends Controller
 	 */
 	public function show(Category $category)
 	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  \App\Models\Category  $category
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit(Category $category)
-	{
-		//
+		return $category->toArray();
 	}
 
 	/**
