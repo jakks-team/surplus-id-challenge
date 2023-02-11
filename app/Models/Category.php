@@ -34,10 +34,10 @@ class Category extends Model {
 		return $this->hasManyThrough(
 			Product::class,
 			CategoryProduct::class,
-			'product_id',
-			'id',
 			'category_id',
-			'id'
+			'id',
+			'id',
+			'product_id'
 		);
 	}
 }
