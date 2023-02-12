@@ -41,4 +41,17 @@ class Product extends Model {
 			'category_id'
 		);
 	}
+	/**
+	 * Get the images for the product.
+	 */
+	public function images() {
+		return $this->hasManyThrough(
+			Image::class,
+			ProductImage::class,
+			'product_id',
+			'id',
+			'id',
+			'image_id'
+		);
+	}
 }
