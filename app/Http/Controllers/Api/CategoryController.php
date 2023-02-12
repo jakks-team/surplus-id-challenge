@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\StoreCategoryProductRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\CategoryProduct;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -76,6 +79,27 @@ class CategoryController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function categoryProducts(Category $category) {
+		return ProductResource::collection($category->products);
+	}
+
+	/**
+	 * Add new Product relationship to the given Category.
+	 *
+	 * @param  \App\Http\Requests\StoreCategoryProductRequest  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function storeCategoryProducts(StoreCategoryProductRequest $request, Category $category)
+	{
+		$isFound = $category->products->filter(function($product) use ($request){
+			return $product->id == $request->validated()['product_id'];
+		})->count();
+		if($isFound == 0) {
+			CategoryProduct::create([
+				'category_id' => $category->id,
+				'product_id' => $request->validated()['product_id'],
+			]);
+		}
+		$category->refresh();
 		return ProductResource::collection($category->products);
 	}
 }
