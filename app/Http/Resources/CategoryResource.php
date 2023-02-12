@@ -5,6 +5,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryResource extends JsonResource
 {
+	protected $hiddenFields = [
+		'laravel_through_key',
+	];
     /**
      * Transform the resource into an array.
      *
@@ -13,6 +16,6 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+		return collect(parent::toArray($request))->forget($this->hiddenFields)->toArray();
     }
 }
