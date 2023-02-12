@@ -109,7 +109,7 @@ class ImageController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function deleteCategoryProducts(Image $image, Product $product)
+	public function deleteImageProducts(Image $image, Product $product)
 	{
 		$isFound = $image->products->filter(function($eachProduct) use ($product){
 			return $eachProduct->id == $product->id;
