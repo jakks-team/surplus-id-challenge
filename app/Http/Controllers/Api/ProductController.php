@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\StoreProductCategoryRequest;
+use App\Http\Requests\StoreProductImageRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Http\Requests\DeleteProductCategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ImageResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\CategoryProduct;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -122,5 +125,55 @@ class ProductController extends Controller
 		}
 		$product->refresh();
 		return CategoryResource::collection($product->categories);
+	}
+
+	/**
+	 * Display a listing of Images that belongs to the Product.
+	 * 
+	 * @return \Illuminate\Http\Response
+	 */
+	public function productImages(Product $product) {
+		return ImageResource::collection($product->images);
+	}
+
+	/**
+	 * Add new Product relationship to the given Image.
+	 *
+	 * @param  \App\Http\Requests\StoreProductImageRequest  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function storeProductImages(StoreProductImageRequest $request, Product $product)
+	{
+		$isFound = $product->images->filter(function($image) use ($request){
+			return $image->id == $request->validated()['image_id'];
+		})->count();
+		if($isFound == 0) {
+			ProductImage::create([
+				'product_id' => $product->id,
+				'image_id' => $request->validated()['image_id'],
+			]);
+		}
+		$product->refresh();
+		return ImageResource::collection($product->images);
+	}
+
+	/**
+	 * Delete Product relationship to the given Image.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function deleteProductImages(Product $product, Image $image)
+	{
+		$isFound = $product->images->filter(function($eachImage) use ($image){
+			return $eachImage->id == $image->id;
+		})->count();
+		if($isFound != 0) {
+			ProductImage::where([
+				'product_id' => $product->id,
+				'image_id' => $image->id,
+			])->delete();
+		}
+		$product->refresh();
+		return ImageResource::collection($product->images);
 	}
 }

@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\StoreImageProductRequest;
 use App\Http\Requests\UpdateImageRequest;
-use App\Http\Requests\DeleteImageProductRequest;
 use App\Http\Resources\ImageResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Image;
