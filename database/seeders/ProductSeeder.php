@@ -2,9 +2,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Category;
+use App\Models\Product;
 
-class CategorySeeder extends Seeder
+class ProductSeeder extends Seeder
 {
 	/**
 	 * Run the database seeds.
@@ -13,11 +13,12 @@ class CategorySeeder extends Seeder
 	 */
 	public function run()
 	{
-		if(Category::count() == 0) {
+		if(Product::count() == 0) {
 			$randCount = mt_rand(15, 25);
 			for($i = 0;$i<$randCount;$i++) {
-				Category::create([
+				Product::create([
 					'name' => fake()->words(mt_rand(1, 5), true),
+					'description' => fake()->realTextBetween(mt_rand(5, 15), mt_rand(15, 300), mt_rand(1, 3)),
 					'enable' => mt_rand(0, 1),
 				]);
 			}
