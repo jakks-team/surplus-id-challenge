@@ -29,3 +29,6 @@ Route::get('products/{product}/categories', [ProductController::class, 'productC
 Route::post('products/{product}/categories', [ProductController::class, 'storeProductCategories'])->name('products.categories.store');
 Route::delete('products/{product}/categories/{category}', [ProductController::class, 'deleteProductCategories'])->name('categories.products.delete');
 Route::apiResource('images', ImageController::class);
+Route::get('images/{image}/products', [ImageController::class, 'imageProducts'])->name('images.products.index');
+Route::post('images/{image}/products', [ImageController::class, 'storeImageProducts'])->name('images.products.store');
+Route::delete('images/{image}/products/{product}', [ImageController::class, 'deleteImageProducts'])->name('images.products.delete');

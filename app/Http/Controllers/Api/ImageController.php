@@ -3,9 +3,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreImageRequest;
-// use App\Http\Requests\StoreProductImageRequest;
+use App\Http\Requests\StoreImageProductRequest;
 use App\Http\Requests\UpdateImageRequest;
-// use App\Http\Requests\DeleteProductImageRequest;
+use App\Http\Requests\DeleteImageProductRequest;
 use App\Http\Resources\ImageResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Image;
@@ -72,5 +72,55 @@ class ImageController extends Controller
 	{
 		$image->delete();
 		return response(null, 204);
+	}
+
+	/**
+	 * Display a listing of Products that belongs to the Image.
+	 * 
+	 * @return \Illuminate\Http\Response
+	 */
+	public function imageProducts(Image $image) {
+		return ProductResource::collection($image->products);
+	}
+
+	/**
+	 * Add new Product relationship to the given Image.
+	 *
+	 * @param  \App\Http\Requests\StoreImageProductRequest  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function storeImageProducts(StoreImageProductRequest $request, Image $image)
+	{
+		$isFound = $image->products->filter(function($product) use ($request){
+			return $product->id == $request->validated()['product_id'];
+		})->count();
+		if($isFound == 0) {
+			ProductImage::create([
+				'image_id' => $image->id,
+				'product_id' => $request->validated()['product_id'],
+			]);
+		}
+		$image->refresh();
+		return ProductResource::collection($image->products);
+	}
+
+	/**
+	 * Delete Product relationship to the given Image.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function deleteCategoryProducts(Image $image, Product $product)
+	{
+		$isFound = $image->products->filter(function($eachProduct) use ($product){
+			return $eachProduct->id == $product->id;
+		})->count();
+		if($isFound != 0) {
+			ProductImage::where([
+				'image_id' => $image->id,
+				'product_id' => $product->id,
+			])->delete();
+		}
+		$image->refresh();
+		return ProductResource::collection($image->products);
 	}
 }
