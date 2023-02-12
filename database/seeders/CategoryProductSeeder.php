@@ -49,37 +49,5 @@ class CategoryProductSeeder extends Seeder
 				}
 			}
 		});
-		// $categories = Category::all();
-		// $products = Product::all();
-		// foreach($categories->toArray() as $category) {
-		// 	$randKey = array_rand($products->toArray(), mt_rand(2, 5));
-		// 	foreach($randKey as $prodKey) {
-		// 		$catProd = CategoryProduct::where([
-		// 			'category_id' => $category['id'],
-		// 			'product_id' => $products[$prodKey]->id,
-		// 		])->first();
-		// 		if(!$catProd) {
-		// 			CategoryProduct::create([
-		// 				'category_id' => $category['id'],
-		// 				'product_id' => $products[$prodKey]->id,
-		// 			]);
-		// 		}
-		// 	}
-		// }
-		// foreach($products->toArray() as $product) {
-		// 	$randKey = array_rand($categories->toArray(), mt_rand(2, 5));
-		// 	foreach($randKey as $catKey) {
-		// 		$catProd = CategoryProduct::where([
-		// 			'category_id' => $categories[$catKey]->id,
-		// 			'product_id' => $product['id'],
-		// 		])->first();
-		// 		if(!$catProd) {
-		// 			CategoryProduct::create([
-		// 				'category_id' => $categories[$catKey]->id,
-		// 				'product_id' => $product['id'],
-		// 			]);
-		// 		}
-		// 	}
-		// }
 	}
 }
