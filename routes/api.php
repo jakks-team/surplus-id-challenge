@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,4 @@ Route::apiResource('products', ProductController::class);
 Route::get('products/{product}/categories', [ProductController::class, 'productCategories'])->name('products.categories.index');
 Route::post('products/{product}/categories', [ProductController::class, 'storeProductCategories'])->name('products.categories.store');
 Route::delete('products/{product}/categories/{category}', [ProductController::class, 'deleteProductCategories'])->name('categories.products.delete');
+Route::apiResource('images', ImageController::class);
