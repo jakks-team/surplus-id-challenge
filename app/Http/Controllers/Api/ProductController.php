@@ -45,26 +45,16 @@ class ProductController extends Controller
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  \App\Models\Product  $product
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit(Product $product)
-	{
-		//
-	}
-
-	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \App\Http\Requests\StoreProductRequest  $request
 	 * @param  \App\Models\Product  $product
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Product $product)
+	public function update(StoreProductRequest $request, Product $product)
 	{
-		//
+		$product->update($request->validated());
+		return $product->toArray();
 	}
 
 	/**
@@ -75,6 +65,7 @@ class ProductController extends Controller
 	 */
 	public function destroy(Product $product)
 	{
-		//
+		$product->delete();
+		return response(null, 204);
 	}
 }
