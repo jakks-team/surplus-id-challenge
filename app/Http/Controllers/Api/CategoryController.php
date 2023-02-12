@@ -3,8 +3,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Requests\StoreCategoryProductRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Requests\DeleteCategoryProductRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
@@ -105,7 +105,7 @@ class CategoryController extends Controller
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Delete Product relationship to the given Category.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
