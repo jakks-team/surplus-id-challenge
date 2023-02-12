@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -67,5 +68,14 @@ class CategoryController extends Controller
 	{
 		$category->delete();
 		return response(null, 204);
+	}
+
+	/**
+	 * Display a listing of Products that belongs to the Category.
+	 * 
+	 * @return \Illuminate\Http\Response
+	 */
+	public function categoryProducts(Category $category) {
+		return ProductResource::collection($category->products);
 	}
 }
