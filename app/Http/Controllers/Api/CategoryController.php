@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Requests\StoreCategoryProductRequest;
+use App\Http\Requests\DeleteCategoryProductRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
@@ -98,6 +99,26 @@ class CategoryController extends Controller
 				'category_id' => $category->id,
 				'product_id' => $request->validated()['product_id'],
 			]);
+		}
+		$category->refresh();
+		return ProductResource::collection($category->products);
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function deleteCategoryProducts(Category $category, Product $product)
+	{
+		$isFound = $category->products->filter(function($eachProduct) use ($product){
+			return $eachProduct->id == $product->id;
+		})->count();
+		if($isFound != 0) {
+			CategoryProduct::where([
+				'category_id' => $category->id,
+				'product_id' => $product->id,
+			])->delete();
 		}
 		$category->refresh();
 		return ProductResource::collection($category->products);
