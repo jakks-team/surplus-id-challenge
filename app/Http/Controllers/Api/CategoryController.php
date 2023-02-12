@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\StoreCategoryProductRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Http\Requests\DeleteCategoryProductRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
